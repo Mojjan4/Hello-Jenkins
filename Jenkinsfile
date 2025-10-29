@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        ANDROID_HOME = '/var/lib/jenkins/Android/Sdk'
-        PATH = "$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools"
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -16,8 +11,7 @@ pipeline {
         stage('Build Debug APK') {
             steps {
                 sh '''
-                    echo " Android SDK path: $ANDROID_HOME"
-                    # Write local.properties for Gradle so it knows where the SDK is
+                    echo "✅ Android SDK path: $ANDROID_HOME"
                     echo "sdk.dir=$ANDROID_HOME" > local.properties
                     ./gradlew clean assembleDebug
                 '''
