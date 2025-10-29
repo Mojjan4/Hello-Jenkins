@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+            ANDROID_HOME = '/home/testtestsson/Android/Sdk'
+            PATH = "$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools"
+
     stages {
         stage('Checkout') {
             steps {
