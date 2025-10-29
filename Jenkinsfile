@@ -16,7 +16,9 @@ pipeline {
         stage('Build Debug APK') {
             steps {
                 sh '''
-                    echo "✅ Android SDK path: $ANDROID_HOME"
+                    echo " Android SDK path: $ANDROID_HOME"
+                    # Write local.properties for Gradle so it knows where the SDK is
+                    echo "sdk.dir=$ANDROID_HOME" > local.properties
                     ./gradlew clean assembleDebug
                 '''
             }
