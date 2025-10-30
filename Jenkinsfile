@@ -8,6 +8,12 @@ pipeline {
             }
         }
 
+        stage('Run Unit Tests') {
+            steps {
+                sh './gradlew testDebugUnitTest'
+            }
+        }
+
         stage('Build Debug APK') {
             steps {
                 sh '''
@@ -18,9 +24,9 @@ pipeline {
             }
         }
 
-        stage('Run Unit Tests') {
+        stage('Archive Artifact') {
             steps {
-                sh './gradlew testDebugUnitTest'
+                archiveArtifacts artifacts: 'app/build/outputs/apk/debug/*.apk', fingerprint: true
             }
         }
     }
@@ -30,7 +36,7 @@ pipeline {
             echo '--- Pipeline completed ---'
         }
         success {
-            echo '✅ Build and tests succeeded!'
+            echo '✅ Build, test, and artifact pipeline succeeded!'
         }
         failure {
             echo '❌ Build or tests failed! Check the console output.'
